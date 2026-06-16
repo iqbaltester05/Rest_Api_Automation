@@ -6,14 +6,16 @@ import org.testng.annotations.Test;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import utilClass.PropertiesHandler;
+
 import static io.restassured.config.EncoderConfig.encoderConfig;
 
 public class OauthTokenTest {
-    static final String BASE_URL = "http://localhost:3000";
 
     @Test
     public void getOauthToken() {
-        RestAssured.baseURI = BASE_URL;
+        PropertiesHandler properties=new PropertiesHandler();
+        RestAssured.baseURI = properties.getPropertiesValueByKey("commonData", "BaseUri");
 
         RestAssured.config = RestAssured.config()
                 .encoderConfig(encoderConfig()
