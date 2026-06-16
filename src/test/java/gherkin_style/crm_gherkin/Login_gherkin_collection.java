@@ -23,7 +23,7 @@ public class Login_gherkin_collection {
             .expectStatusCode(200)
             .build();
 
-        body.put("email", "myrtle.streich9@yahoo.com");
+        body.put("email", "john.doe@example.com");
         body.put("password", "password123");
 
         given()

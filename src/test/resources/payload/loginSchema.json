@@ -1,0 +1,175 @@
+{
+	"definitions": {},
+	"$schema": "http://json-schema.org/draft-07/schema#", 
+	"$id": "https://example.com/object1781615816.json", 
+	"title": "Root", 
+	"type": "object",
+	"required": [
+		"data",
+		"message",
+		"timestamp"
+	],
+	"properties": {
+		"data": {
+			"$id": "#root/data", 
+			"title": "Data", 
+			"type": "object",
+			"required": [
+				"accessToken",
+				"refreshToken",
+				"expiresIn",
+				"tokenType",
+				"user"
+			],
+			"properties": {
+				"accessToken": {
+					"$id": "#root/data/accessToken", 
+					"title": "Accesstoken", 
+					"type": "string",
+					"default": "",
+					"examples": [
+						"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg3NDQyNTY2LWY5OGYtNDVmYS1hYWZmLTUxNDAwNjhmMTU5ZSIsImVtYWlsIjoibXlydGxlLnN0cmVpY2g5QHlhaG9vLmNvbSIsInJvbGUiOiJBRE1JTiIsInVzZXJuYW1lIjoibXlydGxlLnN0cmVpY2gxIiwiaWF0IjoxNzgxNjE1NzUyLCJleHAiOjE3ODE2MTkzNTJ9.oG9L6I_wwVKKM0H-31UKE0xODCHLDRVJBhRQwlhydso"
+					],
+					"pattern": "^.*$"
+				},
+				"refreshToken": {
+					"$id": "#root/data/refreshToken", 
+					"title": "Refreshtoken", 
+					"type": "string",
+					"default": "",
+					"examples": [
+						"c24760da-a0c1-4772-bfd0-aa2394593280"
+					],
+					"pattern": "^.*$"
+				},
+				"expiresIn": {
+					"$id": "#root/data/expiresIn", 
+					"title": "Expiresin", 
+					"type": "integer",
+					"examples": [
+						3600
+					],
+					"default": 0
+				},
+				"tokenType": {
+					"$id": "#root/data/tokenType", 
+					"title": "Tokentype", 
+					"type": "string",
+					"default": "",
+					"examples": [
+						"Bearer"
+					],
+					"pattern": "^.*$"
+				},
+				"user": {
+					"$id": "#root/data/user", 
+					"title": "User", 
+					"type": "object",
+					"required": [
+						"id",
+						"username",
+						"email",
+						"firstName",
+						"lastName",
+						"role",
+						"department"
+					],
+					"properties": {
+						"id": {
+							"$id": "#root/data/user/id", 
+							"title": "Id", 
+							"type": "string",
+							"default": "",
+							"examples": [
+								"87442566-f98f-45fa-aaff-5140068f159e"
+							],
+							"pattern": "^.*$"
+						},
+						"username": {
+							"$id": "#root/data/user/username", 
+							"title": "Username", 
+							"type": "string",
+							"default": "",
+							"examples": [
+								"myrtle.streich1"
+							],
+							"pattern": "^.*$"
+						},
+						"email": {
+							"$id": "#root/data/user/email", 
+							"title": "Email", 
+							"type": "string",
+							"default": "",
+							"examples": [
+								"myrtle.streich9@yahoo.com"
+							],
+							"pattern": "^.*$"
+						},
+						"firstName": {
+							"$id": "#root/data/user/firstName", 
+							"title": "Firstname", 
+							"type": "string",
+							"default": "",
+							"examples": [
+								"Myrtle"
+							],
+							"pattern": "^.*$"
+						},
+						"lastName": {
+							"$id": "#root/data/user/lastName", 
+							"title": "Lastname", 
+							"type": "string",
+							"default": "",
+							"examples": [
+								"Streich"
+							],
+							"pattern": "^.*$"
+						},
+						"role": {
+							"$id": "#root/data/user/role", 
+							"title": "Role", 
+							"type": "string",
+							"default": "",
+							"examples": [
+								"ADMIN"
+							],
+							"pattern": "^.*$"
+						},
+						"department": {
+							"$id": "#root/data/user/department", 
+							"title": "Department", 
+							"type": "string",
+							"default": "",
+							"examples": [
+								"Sales"
+							],
+							"pattern": "^.*$"
+						}
+					}
+				}
+
+			}
+		}
+,
+		"message": {
+			"$id": "#root/message", 
+			"title": "Message", 
+			"type": "string",
+			"default": "",
+			"examples": [
+				"Login successful"
+			],
+			"pattern": "^.*$"
+		},
+		"timestamp": {
+			"$id": "#root/timestamp", 
+			"title": "Timestamp", 
+			"type": "string",
+			"default": "",
+			"examples": [
+				"2026-06-16T13:15:53.429Z"
+			],
+			"pattern": "^.*$"
+		}
+	}
+}

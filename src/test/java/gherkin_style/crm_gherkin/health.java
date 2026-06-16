@@ -1,10 +1,10 @@
 package gherkin_style.crm_gherkin;
 
-import io.restassured.RestAssured;
+import static io.restassured.RestAssured.given;
 
 public class health {
     public static void main(String[] args) {
-        RestAssured.given()
+        given()
         .baseUri("http://localhost:3000")
         .when()
         .get("/api/health")
