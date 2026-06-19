@@ -8,7 +8,7 @@
 
 
 
-cookies, oauth1.0, mockserver, storing reponse or deserialisation, complete framework, cucumber hooks, parameterization, cucumber background, log, report, backgroud, Datatable, retri anlayser, nnlisterners, GitActions
+cookies, oauth1.0, mockserver, complete framework, cucumber hooks, parameterization, cucumber background, log, report, backgroud, retri anlayser, nnlisterners, GitActions
 
 
 1. misunderstanding about oauth 1.0 and oauth 2.0

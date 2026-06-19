@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.testng.Assert;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -59,6 +60,21 @@ public class Apisteps {
         requestspec.header("Content-Type", properties.getPropertiesValueByKey("commonData", "ContentType"));
     }
 
+    @Given("user added header")
+    public void user_added_header(DataTable table) {
+        System.out.println("adding contenttyep on header"+properties.getPropertiesValueByKey("commonData", "ContentType"));
+
+        Map<String,String> headers= table.asMap(String.class,String.class);
+        for(Map.Entry<String, String> entry: headers.entrySet()){
+            requestspec.header(entry.getKey(),entry.getValue());
+        }
+        
+
+
+        // requestspec.header("Content-Type", properties.getPropertiesValueByKey("commonData", "ContentType"));
+    }
+
+
      @Given("user added header for Authorization")
     public void user_adand() {
         requestspec.header("Authorization", "Bearer "+properties.getPropertiesValueByKey("commonData", "access_token"));
@@ -71,6 +87,19 @@ public class Apisteps {
         body.put("email", email);
         body.put("password", password);
         requestspec.body(body);
+    }
+
+
+    @Given("user added body")
+    public void the_added_body_as_and(DataTable table) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        
+        Map<String,String> headers= table.asMap(String.class,String.class);
+        for(Map.Entry<String, String> entry: headers.entrySet()){
+            body.put(entry.getKey(),entry.getValue());
+        }
+        requestspec.body(body);
+        
     }
 
     @When("user send post request with endpoint {string}")

@@ -20,6 +20,7 @@ public class Login_framework_collection {
         requestspec.body(body);
 
         Response response=requestspec.post("/api/login");
+        response.getBody().jsonPath().getString("data.user.username");
         System.out.println(response.asPrettyString());
     }
 }

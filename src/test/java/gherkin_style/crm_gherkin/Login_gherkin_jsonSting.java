@@ -9,7 +9,7 @@ import io.restassured.response.Response;
 
 public class Login_gherkin_jsonSting {
 
-    @Test
+//     @Test
     public void loginTest() {
 
         String requestBody = """

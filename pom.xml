@@ -31,7 +31,6 @@
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <version>5.5.6</version>
-            <scope>test</scope>
         </dependency>
 
         <!-- TestNG -->
@@ -62,6 +61,12 @@
     <version>6.0.0</version>
     <scope>compile</scope>
 </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.38</version>
+            <scope>provided</scope>
+        </dependency>
 
     </dependencies>
 

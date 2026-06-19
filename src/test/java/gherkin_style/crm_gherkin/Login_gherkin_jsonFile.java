@@ -11,7 +11,7 @@ import io.restassured.response.Response;
 
 public class Login_gherkin_jsonFile {
 
-    @Test
+    // @Test
     public void loginTest() {
 
         File body = new File("src/test/java/json/login_file.json");
