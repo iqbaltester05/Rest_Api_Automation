@@ -4,11 +4,20 @@
 4. types of headers, parameters, body and authentication
 5. validation
 6. authentication
-7. 
+7. Deserialiazation
+8. DataTable
+9. background
+10. 
 
 
 
-cookies, oauth1.0, mockserver, complete framework, cucumber hooks, parameterization, cucumber background, log, report, backgroud, retri anlayser, nnlisterners, GitActions
+cookies, oauth1.0, mockserver, complete framework, cucumber hooks, parameterization, cucumber background, log, report, backgroudad, retri anlayser, nnlisterners, GitActions, parallel execution
 
 
-1. misunderstanding about oauth 1.0 and oauth 2.0
+handle random data (faker)
+how to use pojo in cucumber
+how to valide data using pojo
+how to handle dataloader $foldername.filename
+handling data with json
+
+String jsonBody = new String(Files.readAllBytes(Paths.get(filePath))); instead of directly file name

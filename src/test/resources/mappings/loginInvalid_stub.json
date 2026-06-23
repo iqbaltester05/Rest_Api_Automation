@@ -1,0 +1,21 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/v1/login",
+    "bodyPatterns": [
+      {
+        "equalToJson": {
+          "username": "teacher",
+          "password": "wrongPassword123"
+        }
+      }
+    ]
+  },
+  "response": {
+    "status": 401,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": "{\n  \"error\": \"Unauthorized\",\n  \"message\": \"Invalid username or password\"\n}"
+  }
+}

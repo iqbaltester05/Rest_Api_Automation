@@ -1,0 +1,21 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/v1/login",
+    "bodyPatterns": [
+      {
+        "equalToJson": {
+          "username": "teacher",
+          "password": "secretPassword123"
+        }
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "login_success.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

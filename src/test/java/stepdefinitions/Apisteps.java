@@ -4,131 +4,247 @@ import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.testng.Assert;
-
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.RestAssured;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
+import utilClass.GenerateToken;
 import utilClass.PropertiesHandler;
+import DriverManager.RestDriver;
 
 public class Apisteps {
-    static final String BASE_URL = "http://localhost:3000";
-    RequestSpecification requestspec;
-    Response response;
+
+    RestDriver restDriver = new RestDriver();
     static String token;
-    PropertiesHandler properties=new PropertiesHandler();
 
-    @Given("user set the restassured")
-    public void user_set_the_restassured() {
-        RestAssured.baseURI = BASE_URL;
+    // =========================================================================
+    // Setup / Configuration
+    // =========================================================================
 
-        requestspec = RestAssured.given();
-
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("email", "myrtle.streich9@yahoo.com");
-        body.put("password", "password123");
-        requestspec.header("Content-Type", "application/json");
-        requestspec.body(body);
-    }
-
-    @When("the user provide with email and password")
-    public void the_user_provide_with_email_and_password() {
-        response = requestspec.post("/api/login");
-    }
-
-    @Then("validate the status code")
-    public void validate_the_status_code() {
-        System.out.println(response.asPrettyString());
-        Assert.assertTrue(response.getStatusCode() == 200, "status code does not match");
-    }
 
     @Given("user set base uri")
     public void user_set_base_uri() {
-        RestAssured.baseURI = properties.getPropertiesValueByKey("commonData", "BaseUri");
-
-        requestspec = RestAssured.given();
+        restDriver.setBaseUri(PropertiesHandler.getPropertiesValueByKey("commonData", "BaseUri"));
+        restDriver.createRequest();
     }
 
+    @Given("user set base uri as {string}")
+    public void user_set_base_uri_as(String baseUri) {
+        restDriver.setBaseUri(baseUri);
+        restDriver.createRequest();
+    }
+
+    @Given("user set content type as {string}")
+    public void user_set_content_type(String contentType) {
+        restDriver.setContentType(contentType);
+    }
+
+    @Given("user enable logging")
+    public void user_enable_logging() {
+        restDriver.enableLogging();
+    }
+
+    // =========================================================================
+    // Headers
+    // =========================================================================
+
     @Given("user added header for ContentType")
-    public void user_added_header_as_and() {
-        System.out.println("adding contenttyep on header"+properties.getPropertiesValueByKey("commonData", "ContentType"));
-        requestspec.header("Content-Type", properties.getPropertiesValueByKey("commonData", "ContentType"));
+    public void user_added_header_for_contenttype() {
+        System.out.println("adding contenttype on header " + PropertiesHandler.getPropertiesValueByKey("commonData", "ContentType"));
+        restDriver.setHeader("Content-Type", PropertiesHandler.getPropertiesValueByKey("commonData", "ContentType"));
     }
 
     @Given("user added header")
     public void user_added_header(DataTable table) {
-        System.out.println("adding contenttyep on header"+properties.getPropertiesValueByKey("commonData", "ContentType"));
-
-        Map<String,String> headers= table.asMap(String.class,String.class);
-        for(Map.Entry<String, String> entry: headers.entrySet()){
-            requestspec.header(entry.getKey(),entry.getValue());
+        Map<String, String> headers = table.asMap(String.class, String.class);
+        for (Map.Entry<String, String> entry : headers.entrySet()) {
+            restDriver.setHeader(entry.getKey(), entry.getValue());
         }
-        
-
-
-        // requestspec.header("Content-Type", properties.getPropertiesValueByKey("commonData", "ContentType"));
     }
 
-
-     @Given("user added header for Authorization")
-    public void user_adand() {
-        requestspec.header("Authorization", "Bearer "+properties.getPropertiesValueByKey("commonData", "access_token"));
-        
+    @Given("user added header {string} with value {string}")
+    public void user_added_header_with_value(String name, String value) {
+        restDriver.setHeader(name, value);
     }
+
+    @Given("user added header for Authorization")
+    public void user_added_header_for_authorization() {
+        restDriver.setBearerToken(GenerateToken.getToken());
+    }
+
+    @Given("user set bearer token {string}")
+    public void user_set_bearer_token(String value) {
+        restDriver.setBearerToken(value);
+    }
+
+    @Given("user set basic auth with username {string} and password {string}")
+    public void user_set_basic_auth(String username, String password) {
+        restDriver.setBasicAuth(username, password);
+    }
+
+    // =========================================================================
+    // Request Body
+    // =========================================================================
 
     @Given("the added body as {string} and {string}")
     public void the_added_body_as_and(String email, String password) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("email", email);
         body.put("password", password);
-        requestspec.body(body);
+        restDriver.setBody(body);
     }
 
-
     @Given("user added body")
-    public void the_added_body_as_and(DataTable table) {
+    public void user_added_body(DataTable table) {
         Map<String, Object> body = new LinkedHashMap<>();
-        
-        Map<String,String> headers= table.asMap(String.class,String.class);
-        for(Map.Entry<String, String> entry: headers.entrySet()){
-            body.put(entry.getKey(),entry.getValue());
+        Map<String, String> tableData = table.asMap(String.class, String.class);
+        for (Map.Entry<String, String> entry : tableData.entrySet()) {
+            body.put(entry.getKey(), entry.getValue());
         }
-        requestspec.body(body);
-        
+        restDriver.setBody(body);
+    }
+
+    @Given("user added body as json string")
+    public void user_added_body_as_json_string(String body) {
+        restDriver.setBody(body);
+    }
+
+    @Given("user added body from file {string}")
+    public void user_added_body_from_file(String filePath) {
+        restDriver.setBody(new File(filePath));
+    }
+
+    // =========================================================================
+    // Query / Path / Form Parameters
+    // =========================================================================
+
+    @Given("user added query param {string} with value {string}")
+    public void user_added_query_param(String key, String value) {
+        restDriver.setQueryParam(key, value);
+    }
+
+    @Given("user added query params")
+    public void user_added_query_params(DataTable table) {
+        Map<String, String> params = table.asMap(String.class, String.class);
+        restDriver.setQueryParams(params);
+    }
+
+    @Given("user added path param {string} with value {string}")
+    public void user_added_path_param(String key, String value) {
+        restDriver.setPathParam(key, value);
+    }
+
+    @Given("user added form param {string} with value {string}")
+    public void user_added_form_param(String key, String value) {
+        restDriver.setFormParam(key, value);
+    }
+
+    @Given("user added form params")
+    public void user_added_form_params(DataTable table) {
+        Map<String, String> params = table.asMap(String.class, String.class);
+        restDriver.setFormParams(params);
+    }
+
+    // =========================================================================
+    // HTTP Methods
+    // =========================================================================
+
+    @When("the user provide with email and password")
+    public void the_user_provide_with_email_and_password() {
+        restDriver.post("/api/login");
+    }
+
+    @When("user send get request with endpoint {string}")
+    public void user_send_get_request_with_endpoint(String endpoint) {
+        restDriver.get(endpoint);
     }
 
     @When("user send post request with endpoint {string}")
     public void user_send_post_request_with_endpoint(String endpoint) {
-        response = requestspec.post(endpoint);
-        
+        restDriver.post(endpoint);
     }
 
-     @When("user send get request with endpoint {string}")
-    public void user_get_post_request_with_endpoint(String endpoint) {
-        System.out.println(requestspec.log().all());
-        response = requestspec.get(endpoint);
+    @When("user send put request with endpoint {string}")
+    public void user_send_put_request_with_endpoint(String endpoint) {
+        restDriver.put(endpoint);
     }
 
-     @When("user store the accesstoken")
+    @When("user send patch request with endpoint {string}")
+    public void user_send_patch_request_with_endpoint(String endpoint) {
+        restDriver.patch(endpoint);
+    }
+
+    @When("user send delete request with endpoint {string}")
+    public void user_send_delete_request_with_endpoint(String endpoint) {
+        restDriver.delete(endpoint);
+    }
+
+    // =========================================================================
+    // Token / Response Storage
+    // =========================================================================
+
+    @When("user store the accesstoken")
     public void user_storer_access_token() {
-        token=response.jsonPath().getString("data.accessToken");
-        properties.setProperties("commonData", "access_token", token);
-        System.out.println("============================="+token+"===============================");
+        token = restDriver.getJsonPathValue("data.accessToken");
+        PropertiesHandler.setProperties("commonData", "access_token", token);
+        System.out.println("=============================" + token + "===============================");
+    }
+
+    @When("user store json path {string} as {string}")
+    public void user_store_json_path_as(String jsonPath, String propertyKey) {
+        String value = restDriver.getJsonPathValue(jsonPath);
+        PropertiesHandler.setProperties("commonData", propertyKey, value);
+        System.out.println("Stored " + jsonPath + " = " + value);
+    }
+
+    // =========================================================================
+    // Validation
+    // =========================================================================
+
+    @Then("validate the status code")
+    public void validate_the_status_code() {
+        System.out.println(restDriver.getPrettyResponseBody());
+        restDriver.validateStatusCode(200);
     }
 
     @Then("validate the status code as {int}")
-    public void validate_the_status_code_as(Integer int1) {
-        System.out.println(response.asPrettyString());
-        Assert.assertTrue(response.getStatusCode() == int1, "status code does not match" +response.getStatusCode() );
+    public void validate_the_status_code_as(Integer expectedStatusCode) {
+        System.out.println(restDriver.getPrettyResponseBody());
+        restDriver.validateStatusCode(expectedStatusCode);
     }
 
     @Then("validate schema from json file {string}")
-    public void validate_schema_from_json_file(String string) {
-        response.then().assertThat().body(matchesJsonSchema(new File("src/test/resources/payload/loginSchema.json")));
-}
+    public void validate_schema_from_json_file(String path) {
+        restDriver.validateResponseMatchesSchema("src/test/resources/payload/loginSchema.json");
+    }
+
+    @Then("validate json path {string} is {string}")
+    public void validate_json_path_value(String jsonPath, String expectedValue) {
+        restDriver.validateJsonPath(jsonPath, expectedValue);
+    }
+
+    @Then("validate json path {string} is {int}")
+    public void validate_json_path_int(String jsonPath, Integer expectedValue) {
+        restDriver.validateJsonPath(jsonPath, expectedValue);
+    }
+
+    @Then("validate response body contains {string}")
+    public void validate_response_body_contains(String content) {
+        restDriver.validateBodyContains(content);
+    }
+
+    @Then("validate response header {string} is {string}")
+    public void validate_response_header(String headerName, String expectedValue) {
+        restDriver.validateHeader(headerName, expectedValue);
+    }
+
+    @Then("validate response time less than {int} ms")
+    public void validate_response_time(long maxMillis) {
+        restDriver.validateResponseTime(maxMillis);
+    }
+
+    @Then("print response")
+    public void print_response() {
+        System.out.println(restDriver.getPrettyResponseBody());
+    }
 }

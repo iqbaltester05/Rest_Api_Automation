@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class PropertiesHandler {
     
-    public String getPropertiesValueByKey(String fileName, String Key){
+    public static String getPropertiesValueByKey(String fileName, String Key){
         Properties properties=new Properties();
         FileInputStream fis=null;
              try {
@@ -24,7 +24,7 @@ public class PropertiesHandler {
         return properties.getProperty(Key);
     }
 
-    public void setProperties(String fileName, String key, String value){
+    public static void setProperties(String fileName, String key, String value){
         Properties properties=new Properties();
         try (FileInputStream fis = new FileInputStream("src/test/resources/test data/"+fileName+".properties")) {
             properties.load(fis);

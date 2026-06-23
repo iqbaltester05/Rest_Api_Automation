@@ -1,19 +1,15 @@
-package gherkin_style.framework_style;
-
-import org.testng.Assert;
-import org.testng.annotations.Test;
+package utilClass;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import utilClass.PropertiesHandler;
 
 import static io.restassured.config.EncoderConfig.encoderConfig;
 
-public class OauthTokenTest {
+public class GenerateToken {
 
-    //  @Test
-    public void getOauthToken() {
+    // @Test
+    public static String getToken() {
         PropertiesHandler properties=new PropertiesHandler();
         RestAssured.baseURI = properties.getPropertiesValueByKey("commonData", "BaseUri");
 
@@ -33,9 +29,8 @@ public class OauthTokenTest {
         requestSpec.formParam("scope", "openid profile email");
 
         Response response = requestSpec.post("/api/oauth/token");
+        String token=response.jsonPath().getString("access_token");
 
-        System.out.println(response.asPrettyString());
-
-        Assert.assertEquals(response.getStatusCode(), 200);
+        return token;
     }
 }
