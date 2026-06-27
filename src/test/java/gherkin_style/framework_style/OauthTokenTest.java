@@ -12,7 +12,7 @@ import static io.restassured.config.EncoderConfig.encoderConfig;
 
 public class OauthTokenTest {
 
-    //  @Test
+    @Test
     public void getOauthToken() {
         PropertiesHandler properties=new PropertiesHandler();
         RestAssured.baseURI = properties.getPropertiesValueByKey("commonData", "BaseUri");
@@ -33,7 +33,8 @@ public class OauthTokenTest {
         requestSpec.formParam("scope", "openid profile email");
 
         Response response = requestSpec.post("/api/oauth/token");
-
+        String token=response.body().jsonPath().getString("access_token");
+        System.out.println(token);
         System.out.println(response.asPrettyString());
 
         Assert.assertEquals(response.getStatusCode(), 200);

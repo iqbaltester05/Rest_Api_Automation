@@ -11,7 +11,7 @@
 
 
 
-cookies, oauth1.0, mockserver, complete framework, cucumber hooks, parameterization, cucumber background, log, report, backgroudad, retri anlayser, nnlisterners, GitActions, parallel execution
+cookies, oauth1.0, mockserver, complete framework, cucumber hooks, parameterization, cucumber background, log, report, backgroudad, retri anlayser, listerners, GitActions, parallel execution
 
 
 handle random data (faker)
@@ -19,5 +19,6 @@ how to use pojo in cucumber
 how to valide data using pojo
 how to handle dataloader $foldername.filename
 handling data with json
+handling environment or flavour
 
 String jsonBody = new String(Files.readAllBytes(Paths.get(filePath))); instead of directly file name

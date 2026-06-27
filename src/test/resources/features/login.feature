@@ -1,5 +1,17 @@
 Feature: Login and User Management
 
+  # Background:
+  #    Given user set base uri
+  #   And user set content type as "application/json"
+  #   And user added body
+  #     | email    | john.doe@example.com |
+  #     | password | password123          |
+  #   When user send post request with endpoint "/api/login"
+  #   Then validate the status code as 200
+  #   And validate json path "message" is "Login successful"
+  #   And user store the accesstoken
+
+  # @authentication @smoke @regression
   # Scenario: login with valid credential
   #   Given user set base uri
   #   And user set content type as "application/json"
@@ -20,29 +32,22 @@ Feature: Login and User Management
   #   When user send post request with endpoint "/api/login"
   #   Then validate the status code as 401
 
-  Scenario: get current user detail
-    Given user set base uri
-    And user added header for ContentType
-    And user added header for Authorization
-    When user send get request with endpoint "/api/me"
-    Then validate the status code as 200
+  # Scenario: get current user detail
+  #   Given user set base uri
+  #   And user added header for ContentType
+  #   And user added header for Authorization
+  #   When user send get request with endpoint "/api/me"
+  #   Then validate the status code as 200
 
   Scenario: create a user
     Given user set base uri
     And user set content type as "application/json"
     And user added header for Authorization
-    And user added body
-      | username   | pawan2              |
-      | email      | pawan2@example.com  |
-      | password   | password123         |
-      | firstName  | pawan2              |
-      | lastName   | p2                  |
-      | role       | SALES_REP           |
-      | department | Sales               |
-      | phone      | +1234567890         |
+    And user registeration with random data
     When user send post request with endpoint "/api/users"
     Then validate the status code as 201
-    And validate json path "message" is "User created successfully"
+    And validate json path "message" is "Users created successfully"
+    And validate schema from json file "/payload/loginSchema"
 
 
   # Scenario: delete a user

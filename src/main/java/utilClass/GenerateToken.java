@@ -8,7 +8,6 @@ import static io.restassured.config.EncoderConfig.encoderConfig;
 
 public class GenerateToken {
 
-    // @Test
     public static String getToken() {
         PropertiesHandler properties=new PropertiesHandler();
         RestAssured.baseURI = properties.getPropertiesValueByKey("commonData", "BaseUri");

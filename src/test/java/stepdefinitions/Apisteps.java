@@ -4,10 +4,13 @@ import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.github.javafaker.Faker;
+
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import pojo.LoginPojo;
 import utilClass.GenerateToken;
 import utilClass.PropertiesHandler;
 import DriverManager.RestDriver;
@@ -21,9 +24,9 @@ public class Apisteps {
     // Setup / Configuration
     // =========================================================================
 
-
     @Given("user set base uri")
     public void user_set_base_uri() {
+        String env = System.getProperty("environment");
         restDriver.setBaseUri(PropertiesHandler.getPropertiesValueByKey("commonData", "BaseUri"));
         restDriver.createRequest();
     }
@@ -50,7 +53,8 @@ public class Apisteps {
 
     @Given("user added header for ContentType")
     public void user_added_header_for_contenttype() {
-        System.out.println("adding contenttype on header " + PropertiesHandler.getPropertiesValueByKey("commonData", "ContentType"));
+        System.out.println("adding contenttype on header "
+                + PropertiesHandler.getPropertiesValueByKey("commonData", "ContentType"));
         restDriver.setHeader("Content-Type", PropertiesHandler.getPropertiesValueByKey("commonData", "ContentType"));
     }
 
@@ -102,6 +106,51 @@ public class Apisteps {
             body.put(entry.getKey(), entry.getValue());
         }
         restDriver.setBody(body);
+    }
+
+    @Given("user registeration with random data")
+    public void createuserwithRandomData() {
+        Map<String, Object> user = new LinkedHashMap<>();
+        Faker faker=new Faker();
+        String username="pawan"+faker.number().digits(5);
+        String email=faker.internet().emailAddress();
+        String firstName=faker.name().firstName();
+        String lastName=faker.name().lastName();
+        String phone=faker.number().digits(10);
+        user.put("username", username);
+        user.put("email", email);
+        user.put("password", "password123");
+        user.put("firstName", firstName);
+        user.put("lastName", lastName);
+        user.put("role", "SALES_REP");
+        user.put("department", "Sales");
+        user.put("phone", phone);
+    
+        restDriver.setBody(user);
+    }
+
+    @Given("user registeration with random data pojo")
+    public void createuserwithRandomDataPojo() {
+        Map<String, Object> user = new LinkedHashMap<>();
+        Faker faker=new Faker();
+        String username="pawan"+faker.number().digits(5);
+        String email=faker.internet().emailAddress();
+        String firstName=faker.name().firstName();
+        String lastName=faker.name().lastName();
+        String phone=faker.number().digits(10);
+        user.put("username", username);
+        user.put("email", email);
+        user.put("password", "password123");
+        user.put("firstName", firstName);
+        user.put("lastName", lastName);
+        user.put("role", "SALES_REP");
+        user.put("department", "Sales");
+        user.put("phone", phone);
+
+        LoginPojo pojo=new LoginPojo();
+        pojo.setEmail(email);
+    
+        restDriver.setBody(user);
     }
 
     @Given("user added body as json string")
@@ -215,7 +264,7 @@ public class Apisteps {
 
     @Then("validate schema from json file {string}")
     public void validate_schema_from_json_file(String path) {
-        restDriver.validateResponseMatchesSchema("src/test/resources/payload/loginSchema.json");
+        restDriver.validateResponseMatchesSchema("src/test/resources/"+path+".json");
     }
 
     @Then("validate json path {string} is {string}")

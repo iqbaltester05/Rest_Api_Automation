@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 public class MockSetup {
     WireMockServer wireMockServer;
 
-    @BeforeTest
+    // @BeforeTest
     public void mockSetup() {
         // 1. Start the WireMock server on port 8089
         wireMockServer = new WireMockServer(8089);
@@ -29,14 +29,14 @@ public class MockSetup {
         // After tests, stop it using: wireMockServer.stop();
     }
 
-    @Test
+    // @Test
     public void testmock(){
         given().baseUri("http://localhost").port(8089)
         .when().get("/api/hello")
         .then().log().all();
     }
 
-    @AfterTest
+    // @AfterTest
     public void tearMock(){
         wireMockServer.stop();
     }

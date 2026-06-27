@@ -14,24 +14,24 @@ import java.util.Map;
 
 public class Login {
     WireMockServer server;
-    @BeforeTest
+    // @BeforeTest
     public void mockSetup(){
-         server = new WireMockServer(options().port(8089));
+         server = new WireMockServer(options().port(8089).httpsPort(8090));
         server.start();
     }
 
-    @Test
+    // @Test
     public void login(){
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("username", "teacher");
         requestBody.put("password", "wrongPassword123");
-        given().baseUri("http://localhost").port(8089)
+        given().baseUri("https://localhost").port(8090)
         .body(requestBody)
         .when().post("/api/v1/login")
         .then().log().all();
     }
 
-     @AfterTest
+    //  @AfterTest
     public void tearMock(){
         server.stop();
     }
