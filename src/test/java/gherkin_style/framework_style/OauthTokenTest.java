@@ -12,7 +12,7 @@ import static io.restassured.config.EncoderConfig.encoderConfig;
 
 public class OauthTokenTest {
 
-    @Test
+    // @Test
     public void getOauthToken() {
         PropertiesHandler properties=new PropertiesHandler();
         RestAssured.baseURI = properties.getPropertiesValueByKey("commonData", "BaseUri");

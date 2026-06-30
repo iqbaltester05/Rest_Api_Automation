@@ -1,0 +1,83 @@
+{
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "password": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "modifiedBy": {
+          "type": "string"
+        },
+        "createdDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "modifiedDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "version": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "username",
+        "email",
+        "password",
+        "firstName",
+        "lastName",
+        "role",
+        "department",
+        "phone",
+        "createdBy",
+        "modifiedBy",
+        "createdDate",
+        "modifiedDate",
+        "version"
+      ]
+    },
+    "message": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "data",
+    "message",
+    "timestamp"
+  ]
+}

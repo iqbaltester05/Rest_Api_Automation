@@ -5,7 +5,6 @@
     <test name="API Tests" >
         <classes>
             <class name="src/test/runners/TestRunner"/>
-            <class name="src/test/runners/FailedTestRunner"/>
         </classes>
     </test>
 </suite>

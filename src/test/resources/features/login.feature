@@ -43,11 +43,11 @@ Feature: Login and User Management
     Given user set base uri
     And user set content type as "application/json"
     And user added header for Authorization
-    And user registeration with random data
+    And user set body from json file "users" as "validUser"
     When user send post request with endpoint "/api/users"
     Then validate the status code as 201
-    And validate json path "message" is "Users created successfully"
-    And validate schema from json file "/payload/loginSchema"
+    And validate json path "message" is "users created successfully"
+    And validate schema from json file "/payload/createUser"
 
 
   # Scenario: delete a user

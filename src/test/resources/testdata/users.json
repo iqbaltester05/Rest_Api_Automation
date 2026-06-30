@@ -1,0 +1,22 @@
+{
+  "validUser": {
+    "username": "randomUsername",
+    "email": "randomEmail",
+    "password": "password123",
+    "firstName": "randomFirstName",
+    "lastName": "randomLastName",
+    "role": "SALES_REP",
+    "department": "Sales",
+    "phone": "randomPhone"
+  },
+  "invalidUser": {
+    "username": "",
+    "email": "invalid-email",
+    "password": "",
+    "firstName": "",
+    "lastName": "",
+    "role": "",
+    "department": "",
+    "phone": ""
+  }
+}

@@ -4,14 +4,14 @@ import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.github.javafaker.Faker;
-
 import io.cucumber.datatable.DataTable;
+import pojo.CreateUser;
+import pojo.LoginPojo;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import pojo.LoginPojo;
 import utilClass.GenerateToken;
+import utilClass.JsonFileReader;
 import utilClass.PropertiesHandler;
 import DriverManager.RestDriver;
 
@@ -108,49 +108,15 @@ public class Apisteps {
         restDriver.setBody(body);
     }
 
-    @Given("user registeration with random data")
-    public void createuserwithRandomData() {
-        Map<String, Object> user = new LinkedHashMap<>();
-        Faker faker=new Faker();
-        String username="pawan"+faker.number().digits(5);
-        String email=faker.internet().emailAddress();
-        String firstName=faker.name().firstName();
-        String lastName=faker.name().lastName();
-        String phone=faker.number().digits(10);
-        user.put("username", username);
-        user.put("email", email);
-        user.put("password", "password123");
-        user.put("firstName", firstName);
-        user.put("lastName", lastName);
-        user.put("role", "SALES_REP");
-        user.put("department", "Sales");
-        user.put("phone", phone);
-    
-        restDriver.setBody(user);
+    @Given("user set body from json file {string} as {string}")
+    public void user_set_body_from_json_file(String fileName, String objectKey) {
+        restDriver.setBody(JsonFileReader.getObject(fileName, objectKey));
     }
 
-    @Given("user registeration with random data pojo")
-    public void createuserwithRandomDataPojo() {
-        Map<String, Object> user = new LinkedHashMap<>();
-        Faker faker=new Faker();
-        String username="pawan"+faker.number().digits(5);
-        String email=faker.internet().emailAddress();
-        String firstName=faker.name().firstName();
-        String lastName=faker.name().lastName();
-        String phone=faker.number().digits(10);
-        user.put("username", username);
-        user.put("email", email);
-        user.put("password", "password123");
-        user.put("firstName", firstName);
-        user.put("lastName", lastName);
-        user.put("role", "SALES_REP");
-        user.put("department", "Sales");
-        user.put("phone", phone);
-
-        LoginPojo pojo=new LoginPojo();
-        pojo.setEmail(email);
-    
-        restDriver.setBody(user);
+    @Given("user set body from json file {string} as {string} with pojo")
+    public void user_set_body_from_json_file_pojo(String fileName, String objectKey) {
+        CreateUser pojo = JsonFileReader.getObject(fileName, objectKey, CreateUser.class);
+        restDriver.setBody(pojo);
     }
 
     @Given("user added body as json string")
